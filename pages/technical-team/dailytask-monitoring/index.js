@@ -147,13 +147,13 @@ export default function index() {
     setOpenPopup(true);
   };
   const refreshListData = () => {
-    const utoken = localStorage.getItem("token");
+    //const utoken = localStorage.getItem("token");
     api.instance
-      .get("/wms/customer/customer-list", {
-        headers: {
-          Authorization: `Bearer ${utoken}`,
-          Accept: "application/json",
-        },
+      .get("/core/dailytasklist", {
+        // headers: {
+        //   Authorization: `Bearer ${utoken}`,
+        //   Accept: "application/json",
+        // },
       })
 
       .then((resp) => {
@@ -173,10 +173,10 @@ export default function index() {
         <Link color="inherit" href="/">
           Home
         </Link>
-        <Link color="inherit" href="/warehouse-management/">
-          Warehouse Management
+        <Link color="inherit" href="/technical-team/">
+          IT Technical Team
         </Link>
-        <Typography color="textPrimary">Customer Master</Typography>
+        <Typography color="textPrimary">Daily Task Monitoring</Typography>
       </Breadcrumbs>
 
       <div>

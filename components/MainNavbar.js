@@ -20,9 +20,9 @@ import MailIcon from "@material-ui/icons/Mail";
 import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Settings";
 import FolderIcon from "@material-ui/icons/Folder";
-
+import Link from "@material-ui/core/Link";
 import AuthIndicator from "../components/AuthIndicator";
-
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 const drawerWidth = 300;
 
 import MenuItem from "../components/MenuItem";
@@ -125,6 +125,7 @@ export default function MiniDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" className={classes.title}>
             FSC IT Monitoring
           </Typography>
@@ -157,6 +158,11 @@ export default function MiniDrawer(props) {
         <Divider />
         <List>
           <MenuItem
+            link="/dashboard/"
+            label={"Dashboard"}
+            icon={FolderIcon}
+          ></MenuItem>
+          <MenuItem
             link="/technical-team/"
             label={"IT Technical Team"}
             icon={FolderIcon}
@@ -168,6 +174,14 @@ export default function MiniDrawer(props) {
             link="/setting/"
             label={"Setting"}
             icon={SettingsIcon}
+          ></MenuItem>
+        </List>
+        <Divider />
+        <List>
+          <MenuItem
+            link="/logout/"
+            label={"Logout"}
+            icon={ExitToAppOutlinedIcon}
           ></MenuItem>
         </List>
       </Drawer>

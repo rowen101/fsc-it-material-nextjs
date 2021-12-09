@@ -25,6 +25,7 @@ export default function MyApp(props) {
       router.push("./login");
     } else {
       setLogin(true);
+      //router.push("/dashboard");
     }
   }
   useEffect(() => {

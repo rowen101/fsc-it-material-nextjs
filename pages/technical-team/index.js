@@ -52,7 +52,7 @@ export default function index() {
       <Grid item xs={12} className={classes.gridmain}>
         <Grid container justify="center" spacing={spacing}>
           <Grid item>
-            <Link color="inherit" href="/warehouse-management/customer/">
+            <Link color="inherit" href="/technical-team/dailytask-monitoring">
               <Paper className={classes.paper}>
                 <FolderSharedIcon className={classes.fonticon} />
                 Daily Task Monitoring

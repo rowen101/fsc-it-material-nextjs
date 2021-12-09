@@ -1,36 +1,36 @@
 import axios from "axios";
 
 const baseURL = "http://127.0.0.1:8000/api"; //local development
-const accessToken = "1|mZbePy2T5hwjzGAFULTx79zEnLYuegCePyvzDmCL";
+// const accessToken = "1|mZbePy2T5hwjzGAFULTx79zEnLYuegCePyvzDmCL";
 
 const instance = axios.create({
   baseURL: baseURL,
   headers: {
-    // "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
     Accept: "application/json",
     // Authorization: "Bearer <token_here>",
   },
+  withCredentials: true,
 });
 
-instance.interceptors.request.use(function (config) {
-  const userToken = localStorage.getItem("token");
-  //config.headers.Authorization = userToken;
+// instance.interceptors.request.use(function (config) {
+//   const userToken = localStorage.getItem("token");
+//   //config.headers.Authorization = userToken;
 
-  return config;
-});
-// instance.interceptors.request.use(
-//   async (config) => {
-//     const userToken = await localStorage.getItem("token");
+//   return config;
+// });
+instance.interceptors.request.use(
+  async (config) => {
+    const userToken = await localStorage.getItem("token");
 
-//     if (userToken != null) {
-//       config.headers.token = userToken;
+    if (userToken != null) {
+      config.headers.token = userToken;
+    }
 
-//     }
-
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 function httpMsg(obj, statuscode, msg) {
   if (statuscode === 401) {

@@ -86,6 +86,11 @@ export default function SignInSide() {
         console.log(response.data);
         let utoken = response.data.token;
         localStorage.setItem("token", JSON.stringify(utoken));
+        const userToken = localStorage.getItem("token");
+
+        if (userToken != null) {
+          router.push("/dashboard");
+        }
       })
       .catch((err) => {
         console.log(err.data);
