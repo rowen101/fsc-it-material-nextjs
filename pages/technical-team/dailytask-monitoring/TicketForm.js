@@ -67,23 +67,39 @@ export default function CustomerForm(props) {
       <Grid container>
         <Grid item lg={6} sm={6} xs={12}>
           <Controls.Input
-            name="customer_code"
-            label="Customer Code"
+            name="district"
+            label="District"
             value={values.customer_code}
             onChange={handleInputChange}
             error={errors.customer_code}
           />
           <Controls.Input
-            name="customer_name"
-            label="Customer Name"
+            name="site"
+            label="Site"
             value={values.customer_name}
             onChange={handleInputChange}
             error={errors.customer_name}
           />
           <Controls.Input
-            type="number"
-            label="Freshness Requirement %"
+            type="text"
+            label="type"
             name="freshness_requirement"
+            value={values.freshness_requirement}
+            onChange={handleInputChange}
+            error={errors.freshness_requirement}
+          />
+          <Controls.Input
+            type="text"
+            label="type"
+            name="type"
+            value={values.freshness_requirement}
+            onChange={handleInputChange}
+            error={errors.freshness_requirement}
+          />
+          <Controls.Input
+            type="text"
+            label="Position"
+            name="position"
             value={values.freshness_requirement}
             onChange={handleInputChange}
             error={errors.freshness_requirement}
@@ -91,25 +107,59 @@ export default function CustomerForm(props) {
         </Grid>
         <Grid item lg={6} sm={6} xs={12}>
           <Controls.Input
-            label="Freshness Unit"
+            label="Ticket"
             name="freshness_unit"
             value={values.freshness_unit}
             onChange={handleInputChange}
             error={errors.freshness_unit}
           />
           <Controls.Input
-            label="Customer Category"
-            name="customer_category"
+            label="Subject"
+            name="subject"
             value={values.customer_category}
             onChange={handleInputChange}
             error={errors.customer_category}
           />
-          <Controls.Checkbox
-            name="status"
-            label="Status"
-            value={values.status == "0" ? false : true}
+          <Controls.Input
+            label="Department"
+            name="department"
+            value={values.customer_category}
             onChange={handleInputChange}
+            error={errors.customer_category}
           />
+          <Controls.Input
+            label="Remark"
+            name="remark"
+            value={values.customer_category}
+            onChange={handleInputChange}
+            error={errors.customer_category}
+          />
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Controls.Checkbox
+                name="status"
+                label="Status"
+                value={values.status == "0" ? false : true}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controls.Checkbox
+                name="status"
+                label="Status"
+                value={values.status == "0" ? false : true}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controls.Checkbox
+                name="status"
+                label="Status"
+                value={values.status == "0" ? false : true}
+                onChange={handleInputChange}
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
       <div>

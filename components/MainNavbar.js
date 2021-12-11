@@ -22,7 +22,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import FolderIcon from "@material-ui/icons/Folder";
 import Link from "@material-ui/core/Link";
 import AuthIndicator from "../components/AuthIndicator";
-import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+
 const drawerWidth = 300;
 
 import MenuItem from "../components/MenuItem";
@@ -157,33 +157,17 @@ export default function MiniDrawer(props) {
         </div>
         <Divider />
         <List>
-          <MenuItem
-            link="/dashboard/"
-            label={"Dashboard"}
-            icon={FolderIcon}
-          ></MenuItem>
+          <MenuItem link="/dashboard/" label={"Dashboard"}></MenuItem>
           <MenuItem
             link="/technical-team/"
             label={"IT Technical Team"}
-            icon={FolderIcon}
           ></MenuItem>
         </List>
         <Divider />
         <List>
-          <MenuItem
-            link="/setting/"
-            label={"Setting"}
-            icon={SettingsIcon}
-          ></MenuItem>
+          <MenuItem link="/setting/" label={"Setting"}></MenuItem>
         </List>
         <Divider />
-        <List>
-          <MenuItem
-            link="/logout/"
-            label={"Logout"}
-            icon={ExitToAppOutlinedIcon}
-          ></MenuItem>
-        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

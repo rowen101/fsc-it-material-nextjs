@@ -7,7 +7,7 @@ const instance = axios.create({
   baseURL: baseURL,
   headers: {
     "X-Requested-With": "XMLHttpRequest",
-    Accept: "application/json",
+    "X-CSRFToken": `Enter CSR Token here`,
     // Authorization: "Bearer <token_here>",
   },
   withCredentials: true,

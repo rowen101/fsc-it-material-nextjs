@@ -59,7 +59,7 @@ export default function index() {
               </Paper>
             </Link>
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <Link color="inherit" href="/warehouse-management/supplier-master/">
               <Paper className={classes.paper}>
                 {" "}
@@ -169,7 +169,7 @@ export default function index() {
                 Warehouse Users
               </Paper>
             </Link>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     </div>

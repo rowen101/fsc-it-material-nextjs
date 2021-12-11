@@ -5,6 +5,7 @@ import { IconButton, Badge, MenuItem, Menu, Toolbar } from "@material-ui/core";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 const AuthIndicator = ({ setLogin }) => {
   const [auth, setAuth] = React.useState(true);
   const handleChange = (event) => {
@@ -62,6 +63,13 @@ const AuthIndicator = ({ setLogin }) => {
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem
+                link="/logout/"
+                label={"Logout"}
+                icon={ExitToAppOutlinedIcon}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </div>
         )}

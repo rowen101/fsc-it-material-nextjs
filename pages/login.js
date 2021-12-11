@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import { signIn, getSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,7 +17,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import api from "../Services/api";
 import axios from "axios";
-import { useRouter } from "next/router";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -63,6 +65,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+  const [isLoading, setIsLoading] = useState(true);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: enteredEmail,
+      password: enteredPassword,
+    });
+
+    if (!result.error) {
+      // set some auth state
+      router.replace("/dashboard");
+    }
+  };
+
+  const [islogin, setLogin] = useState(false);
   const router = useRouter();
   const classes = useStyles();
 
@@ -70,15 +93,17 @@ export default function SignInSide() {
     email: "",
     password: "",
   });
+
   function isLoggin() {
     const token = window.sessionStorage.getItem("token");
     if (token == null) {
-      //setLogin(false);
+      setLogin(false);
     } else {
-      //setLogin(true);
+      setLogin(true);
       router.push("./");
     }
   }
+
   const login = () => {
     axios
       .post(api.baseURL + "/login", form)
@@ -97,8 +122,18 @@ export default function SignInSide() {
       });
   };
   useEffect(() => {
-    isLoggin();
-  }, []);
+    getSession().then((session) => {
+      if (session) {
+        router.replace("/");
+      } else {
+        setIsLoading(false);
+      }
+    });
+  }, [router]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -122,13 +157,15 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
-              value={form.email}
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  email: e.target.value,
-                });
-              }}
+              ref={emailInputRef}
+              required
+              //value={form.email}
+              // onChange={(e) => {
+              //   setForm({
+              //     ...form,
+              //     email: e.target.value,
+              //   });
+              // }}
             />
             <TextField
               variant="outlined"
@@ -139,14 +176,15 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="email"
-              autoComplete="current-password"
-              value={form.password}
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  password: e.target.value,
-                });
-              }}
+              autoComplete="off"
+              ref={passwordInputRef}
+              // value={form.password}
+              // onChange={(e) => {
+              //   setForm({
+              //     ...form,
+              //     password: e.target.value,
+              //   });
+              // }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -157,7 +195,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={login}
+              onClick={handleLogin}
             >
               Sign In
             </Button>

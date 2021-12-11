@@ -23,7 +23,7 @@ import {
 import Popup from "../../../components/Popup";
 import PageHeader from "../../../components/PageHeader";
 import { PeopleAltTwoTone, PeopleOutlineTwoToneIcon } from "@material-ui/icons";
-import CustomerForm from "./CustomerForm";
+import TicketForm from "./TicketForm";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import CloseIcon from "@material-ui/icons/Close";
 import Controls from "../../../components/controls/Controls";
@@ -71,12 +71,14 @@ export default function index() {
   const [openPopup, setOpenPopup] = useState(false);
   const [captionDialog, setCaptionDialog] = useState("");
   const headCells = [
-    { id: "customer_code", label: "Customer Code" },
-    { id: "customer_name", label: "Customer Name" },
-    { id: "freshness_requirement", label: "Freshness requirement" },
-    { id: "freshness_unit", label: "Freshness Unit" },
-    { id: "customer_category", label: "Category" },
+    { id: "week", label: "Week" },
+    { id: "type", label: "Type" },
+    { id: "site", label: "Site" },
+    { id: "subject", label: "Subject" },
+    { id: "raisedby", label: "Raisedby" },
     { id: "status", label: "Status" },
+    { id: "hitmiss", label: "Hit/Miss" },
+    { id: "sla", label: "SLA" },
     { id: "actions", label: "Actions", disableSorting: true },
   ];
 
@@ -164,6 +166,23 @@ export default function index() {
         console.log(err.data);
       });
   };
+  //get week of the month
+  function getWeekNumber(d) {
+    // Copy date so don't modify original
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    // Get first day of year
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    // Return array of year and week number
+    return [d.getUTCFullYear(), weekNo];
+  }
+  const result = getWeekNumber(new Date());
+  //end get week by month
+
   useEffect(() => {
     refreshListData();
   }, []);
@@ -265,11 +284,11 @@ export default function index() {
       </PopDialog>
 
       <Popup
-        title="Customer Form"
+        title={"Week " + result[1] + " Ticket Form"}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
-        <CustomerForm recordForEdit={recordForEdit} addOrEdit={onSubmit} />
+        <TicketForm recordForEdit={recordForEdit} addOrEdit={onSubmit} />
       </Popup>
     </>
   );
