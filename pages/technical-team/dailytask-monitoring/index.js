@@ -32,7 +32,7 @@ import { Search } from "@material-ui/icons";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
 import AddIcon from "@material-ui/icons/Add";
-import axios from "axios";
+import axios from "../../../lib/axios";
 import api from "../../../Services/api";
 import PopDialog from "../../../components/PopDialog";
 
@@ -110,9 +110,10 @@ export default function index() {
         else
           return items.filter(
             (x) =>
-              x.customer_code.toLowerCase().includes(target.value) ||
-              x.customer_name.toLowerCase().includes(target.value) ||
-              x.customer_category.toLowerCase().includes(target.value)
+              x.name.toLowerCase().includes(target.value) ||
+              x.site.toLowerCase().includes(target.value) ||
+              x.subject.toLowerCase().includes(target.value) ||
+              x.raisedby.toLowerCase().includes(target.value)
           );
       },
     });
@@ -149,14 +150,9 @@ export default function index() {
     setOpenPopup(true);
   };
   const refreshListData = () => {
-    //const utoken = localStorage.getItem("token");
+    const utoken = localStorage.getItem("token");
     api.instance
-      .get("/core/dailytasklist", {
-        // headers: {
-        //   Authorization: `Bearer ${utoken}`,
-        //   Accept: "application/json",
-        // },
-      })
+      .get("/core/dailytasklist/1", {})
 
       .then((resp) => {
         setlistRecordData(resp.data);
@@ -230,11 +226,11 @@ export default function index() {
           <TableBody>
             {recordsAfterPagingAndSorting().map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.customer_code}</TableCell>
-                <TableCell>{item.customer_name}</TableCell>
-                <TableCell>{item.freshness_requirement}</TableCell>
-                <TableCell>{item.freshness_unit}</TableCell>
-                <TableCell>{item.customer_category}</TableCell>
+                <TableCell>{item.week}</TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.site}</TableCell>
+                <TableCell>{item.subject}</TableCell>
+                <TableCell>{item.raisedby}</TableCell>
                 <TableCell>
                   {item.status == 1 ? (
                     <CheckCircleIcon />
@@ -242,7 +238,20 @@ export default function index() {
                     <RadioButtonUncheckedRoundedIcon />
                   )}
                 </TableCell>
-
+                <TableCell>
+                  {item.hitmiss == 1 ? (
+                    <CheckCircleIcon color="secondary" />
+                  ) : (
+                    <RadioButtonUncheckedRoundedIcon />
+                  )}
+                </TableCell>
+                <TableCell>
+                  {item.sla == 1 ? (
+                    <CheckCircleIcon />
+                  ) : (
+                    <RadioButtonUncheckedRoundedIcon />
+                  )}
+                </TableCell>
                 <TableCell>
                   <Controls.ActionButton
                     color="primary"
@@ -252,14 +261,14 @@ export default function index() {
                   >
                     <EditOutlinedIcon fontSize="small" />
                   </Controls.ActionButton>
-                  <Controls.ActionButton
+                  {/* <Controls.ActionButton
                     color="secondary"
                     onClick={() => {
                       DelopenHandlerDialog(item);
                     }}
                   >
                     <CloseIcon fontSize="small" />
-                  </Controls.ActionButton>
+                  </Controls.ActionButton> */}
                 </TableCell>
               </TableRow>
             ))}

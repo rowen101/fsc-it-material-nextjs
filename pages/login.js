@@ -105,12 +105,14 @@ export default function SignInSide() {
   }
 
   const login = () => {
-    axios
-      .post(api.baseURL + "/login", form)
+    api.instance
+      .post("/login", form)
       .then((response) => {
         console.log(response.data);
         let utoken = response.data.token;
+        let user = response.data.user;
         localStorage.setItem("token", JSON.stringify(utoken));
+        localStorage.setItem("user", JSON.stringify(user));
         const userToken = localStorage.getItem("token");
 
         if (userToken != null) {
@@ -157,15 +159,15 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
-              ref={emailInputRef}
+              // ref={emailInputRef}
               required
-              //value={form.email}
-              // onChange={(e) => {
-              //   setForm({
-              //     ...form,
-              //     email: e.target.value,
-              //   });
-              // }}
+              value={form.email}
+              onChange={(e) => {
+                setForm({
+                  ...form,
+                  email: e.target.value,
+                });
+              }}
             />
             <TextField
               variant="outlined"
@@ -177,14 +179,14 @@ export default function SignInSide() {
               type="password"
               id="email"
               autoComplete="off"
-              ref={passwordInputRef}
-              // value={form.password}
-              // onChange={(e) => {
-              //   setForm({
-              //     ...form,
-              //     password: e.target.value,
-              //   });
-              // }}
+              //ref={passwordInputRef}
+              value={form.password}
+              onChange={(e) => {
+                setForm({
+                  ...form,
+                  password: e.target.value,
+                });
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -195,7 +197,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={handleLogin}
+              onClick={login}
             >
               Sign In
             </Button>

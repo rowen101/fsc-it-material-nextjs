@@ -1,14 +1,13 @@
 import axios from "axios";
 
 const baseURL = "http://127.0.0.1:8000/api"; //local development
-// const accessToken = "1|mZbePy2T5hwjzGAFULTx79zEnLYuegCePyvzDmCL";
 
 const instance = axios.create({
   baseURL: baseURL,
   headers: {
     "X-Requested-With": "XMLHttpRequest",
-    "X-CSRFToken": `Enter CSR Token here`,
-    // Authorization: "Bearer <token_here>",
+    Authorization: `Bearer 3|syr4gY7zleMZ34co6RkdtEY9i0EmthY21vwN3NDt`,
+    Accept: "application/json",
   },
   withCredentials: true,
 });
@@ -21,10 +20,10 @@ const instance = axios.create({
 // });
 instance.interceptors.request.use(
   async (config) => {
-    const userToken = await localStorage.getItem("token");
-
-    if (userToken != null) {
-      config.headers.token = userToken;
+    // const userToken = await localStorage.getItem("user");
+    const Token = await localStorage.getItem("token");
+    if (Token != null) {
+      config.headers.token = Token;
     }
 
     return config;

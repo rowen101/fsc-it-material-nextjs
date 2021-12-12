@@ -6,10 +6,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
 import MainNavbar from "../components/MainNavbar";
 import AuthLayout from "../components/AuthLayout";
-import { Provider, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 export default function MyApp(props) {
-  const [session, loading] = useSession();
   const router = useRouter();
   const [islogin, setLogin] = useState(false);
   React.useEffect(() => {
@@ -43,9 +41,7 @@ export default function MyApp(props) {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <Provider session={props.session}>
-          {islogin ? <MainNavbar {...props} /> : <AuthLayout {...props} />}
-        </Provider>
+        {islogin ? <MainNavbar {...props} /> : <AuthLayout {...props} />}
       </ThemeProvider>
     </React.Fragment>
   );
